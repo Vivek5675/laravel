@@ -1,0 +1,176 @@
+Laravel Route Methods
+	Route::get($uri,$callback);
+	Route::post($uri,$callback);
+	Route::put($uri,$callback);
+	Route::patch($uri,$callback);
+	Route::delete($uri,$callback);
+	Route::options($uri,$callback);
+	Route::view($uri,$callback);
+
+
+protected $table = "students"; //for table name and model name are diffrent then use this.
+
+inspecting model command:
+php artisan model:show Model_name.
+
+return $response->status(); //know the status of api, api run successfully then return 200,server side error =500,when api path not correct then error no = 404.
+
+{{session()->reflash()}} //reflash function is flash seesion refresh every time when user refresh the page and keep tge session on/start.
+
+{{session()->keep(['name'])}} //keep name is that. not clear after the refresh
+
+
+commands:
+	composer create-project laravel/laravel Project-name
+
+	composer global require laravel/installer
+	laravel new Project-name
+
+	php artisan serve
+	php artisan make:view viewName
+	php artisan make:controller ControllerName
+	php artisan make:middleware MiddlewareName
+	php artisan make:model ModelName
+
+	php artisan storage:link
+	php artisan lang:publish
+	php artisan install:api
+
+//for the localization in language change.
+Route::get('about/{lang}',function($lang){
+	App::setLocale($lang);
+	return view('about')
+});
+
+
+
+//
+php artisan make:migration create_table-name_table	//create table
+php artisan migrate	//run migration
+php artisan migrate:reset	//all migration table are remove.  All remove migration
+php artisan migrate:rollback --step 3	//remove specific file/table.
+php artisan migrate:refresh	//first rollback all migration and after reload all migration.
+php artisan migrate --path=/database/migrations/2025_09_30_141958_create_test_table.php
+
+php artisan stub:publish //function,items etc make a bydefault when user make: command run.
+
+
+//seeder is used for dummy data entry in database for laravel
+php artisan make:seeder MembersSeeder	//this command to make a folder name - seeders in datavase folder.
+	
+	DB::table('members')->insert([
+		'name'=>str::random(10),
+		'email'=>str::random(10).'@gmail.com',
+		'address'=>str::random(10)
+	]);
+
+php artisan db:seed --class=MembersSeeder(class-name)
+
+
+
+//maintenance Mode
+php artisan down	//website are not work and 503|service unavailebal message show for user.
+php artisan up 		//now application is live.
+
+php artisan down --secret="secret-code" // this command to some people not work in app but admin give the url these url to work in app.
+
+//in model write a:
+	//accessors : accessors are change or edit the field value on UI but not change in database value.
+
+	function getNameAttribute($val){	//funcation name should be as it change on field name and field first letter is capital complusary
+		return ucfirst($val);	//this function to name first latter is capital.
+	}
+
+	function getPhoneAttribute($val){
+		return "+91-".$val;
+	}
+
+	function getPhoneAttribute($val){
+		$this->attributes['name']=ucfirst($val);
+	}
+
+	function getPhoneAttribute($val){
+		$this->attributes['phone']="+91-".$val;
+	}
+
+
+
+//Mail sending command:
+	php artisan make:mail Mail-Name(WelcomeEmail)
+	Email-port = 587	//port number is give in .env file.
+
+//Resource Controller Route
+	Route::resource('member',MemberResourceController::class);
+
+//to call the create function in resource controller the api is http://127.0.0.1:8000/api/member/create  /Different is laast parameter is create.
+
+
+//sanctum package:
+	sanctum is one type of package and that is use in laravel.
+	sanctum is used for token generate.
+
+
+	//for virtual host make a url for random
+	
+	path:  xampp8.2.12\apache\conf\extra\httpd-vhosts.conf  //in this file add this code.
+			<VirtualHost *:80>
+				ServerAdmin webmaster@crud_operation.local
+				DocumentRoot "E:/xampp8.2.12/htdocs/crud_operation/public"
+				ServerName crud_operation.local
+				<Directory "E:/xampp8.2.12/htdocs/crud_operation/public">
+					Options Indexes FollowSymLinks
+					AllowOverride All
+					Require all granted
+				</Directory>
+				ErrorLog "logs/crud_operation.local-error.log"
+				CustomLog "logs/crud_operation.local-access.log" common
+			</VirtualHost>
+
+	path:  xampp8.2.12\apache\conf\httpd.conf
+			LoadModule rewrite_module modules/mod_rewrite.so // this line uncomment
+			# Virtual hosts
+			Include conf/extra/httpd-vhosts.conf // this line uncomment
+
+	path:  C:\Windows\System32\drivers\etc\hosts
+			127.0.0.1 crud_operation.local   // add this line at bottom
+
+
+//for many project in virtual host 
+
+	path:  C:\Windows\System32\drivers\etc\hosts
+			 127.0.0.1 project_name.local // add this and project_name = your project name.
+
+	path:  E:\xampp8.2.12\apache\conf\httpd.conf
+			LoadModule vhost_alias_module modules/mod_vhost_alias.so // this line uncomment
+
+	path:  xampp8.2.12\apache\conf\extra\httpd-vhosts.conf  //in this file add this code.
+			<VirtualHost *:80>
+				ServerAlias *.local
+				UseCanonicalName Off
+
+				# Dynamically map subdomain to folder under htdocs
+				VirtualDocumentRoot "E:/xampp8.2.12/htdocs/%1/public"
+
+				<Directory "E:/xampp8.2.12/htdocs">
+					Options Indexes FollowSymLinks
+					AllowOverride All
+					Require all granted
+				</Directory>
+
+				ErrorLog "logs/%1.local-error.log"
+				CustomLog "logs/%1.local-access.log" common
+			</VirtualHost>
+
+
+
+ssl certificate for localhost project
+
+	choco install mkcert //for install Chocolatey
+	Chocolatey installed 1/1 packages. See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log). //path
+
+	Go to: https://github.com/FiloSottile/mkcert/releases
+	Download the latest mkcert.exe file for Windows.
+	C:\Program Files\mkcert\ //create mkcert at this path
+	Environment Variables...|In System variables, find and edit the Path variable.|Add: C:\Program Files\mkcert\  //set the path in enviroment variables
+	restart command prompt and type mkcert --version
+	
