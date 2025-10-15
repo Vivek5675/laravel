@@ -13,67 +13,84 @@
         <h1 class="h2">Laravel-12-Crud!</h1>
     </div>
     <div class="container mb-5">
-        <div class="row">
-            <div class="d-flex justify-content-end p-0">
-                <a href="{{route('products.index')}}" class="btn btn-dark mt-3">Back</a>
-            </div>
-
-            <div class="card p-0 mt-3">
-                <div class="card-header bg-dark text-white">
-                    <h4 class="h4 ">Edit Product</h4>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="d-flex justify-content-end">
+                    <a href="{{route('products.index')}}" class="btn btn-dark mt-3">Back</a>
                 </div>
-                <div class="card-body shadow-lg">
-                    <form action="{{route('products.update',$product->id)}}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT');
-                        <div class="mb-3">
-                            <lable for="name" class="form-lable">Name :</lable>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name',$product->name)}}">
-                            @error('name')
-                                <p class="invalid-feedback">{{$message}}</p>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <lable for="image" class="form-lable">Image :</lable>
-                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
-                            @error('image')
-                                <p class="invalid-feedback">{{$message}}</p>
-                            @enderror
 
-                            @if(!empty($product->image))
-                                <img src="{{asset('uploads/products/'.$product->image)}}" width="100" alt="" class="rounded mt-2">
-                            @else
-                                <img src="https://placehold.co/600x700" width="50" alt="" class="rounded">
-                            @endif
-                        </div>
-                        <div class="mb-3">
-                            <lable for="sku" class="form-lable">SKU :</lable>
-                            <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" name="sku" value="{{old('sku',$product->sku)}}">
-                            @error('sku')
+                <div class="card p-0 mt-3" style="width: 500px;">
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="h4 ">Edit Product</h4>
+                    </div>
+                    <div class="card-body shadow-lg">
+                        <form action="{{route('products.update',$product->id)}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-3">
+                                <lable for="name" class="form-lable">Name :</lable>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{old('name',$product->name)}}">
+                                @error('name')
                                 <p class="invalid-feedback">{{$message}}</p>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <lable for="price" class="form-lable">Price :</lable>
-                            <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{old('price',$product->price)}}">
-                            @error('price')
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <lable for="image" class="form-lable">Image :</lable>
+                                <div class="d-flex align-items-center gap-3">
+                                    @if(!empty($product->image))
+                                    <img src="{{asset('uploads/products/'.$product->image)}}" width="250" alt="" class="rounded mt-2" id="preview-image">
+                                    @else
+                                    <img src="https://placehold.co/600x700" width="50" alt="" class="rounded">
+                                    @endif
+
+                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" onchange="previewImage(event)">
+
+                                </div>
+                                @error('image')
                                 <p class="invalid-feedback">{{$message}}</p>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <lable for="sku" class="form-lable">Status :</lable>
-                            <select name="status" id="status" class="form-select">
-                                <option {{($product->status == 'Active') ? 'selected' : ''}} value="Active">Active</option>
-                                <option {{($product->status == 'Inactive') ? 'selected' : ''}} value="Inactive">Inactive</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary">Update</button>
-                    </form>
+                                @enderror
+
+                            </div>
+                            <div class="mb-3">
+                                <lable for="sku" class="form-lable">SKU :</lable>
+                                <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" name="sku" value="{{old('sku',$product->sku)}}">
+                                @error('sku')
+                                <p class="invalid-feedback">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <lable for="price" class="form-lable">Price :</lable>
+                                <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{old('price',$product->price)}}">
+                                @error('price')
+                                <p class="invalid-feedback">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <lable for="sku" class="form-lable">Status :</lable>
+                                <select name="status" id="status" class="form-select">
+                                    <option {{($product->status == 'Active') ? 'selected' : ''}} value="Active">Active</option>
+                                    <option {{($product->status == 'Inactive') ? 'selected' : ''}} value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
+
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById('preview-image');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 
 </html>
