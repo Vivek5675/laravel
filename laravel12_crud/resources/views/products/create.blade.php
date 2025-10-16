@@ -23,7 +23,7 @@
                     <div class="card-header bg-dark text-white">
                         <h4 class="h4 ">Create Product</h4>
                     </div>
-                    <div class="card-body shadow-lg">
+                    <div class="card-body shadow-lg" style="background-color: #6c99a3ff;">
                         <form action="{{route('products.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
@@ -58,6 +58,15 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
+                                <lable for="city" class="form-lable">Select City :</lable> <br>
+                                <!-- <input type="city" name="city[]" class="form-control @error('city') is-invalid @enderror"> -->
+                                <input type="checkbox" name="city[]" value="Rajkot">Rajkot <br>
+                                <input type="checkbox" name="city[]" value="Ahemdabad">Ahemdabad <br>
+                                <input type="checkbox" name="city[]" value="Jamnagar">Jamnagar <br>
+                                <input type="checkbox" name="city[]" value="Vadodara">Vadodara <br>
+                                <input type="checkbox" name="city[]" value="Kutch">Kutch
+                            </div>
+                            <div class="mb-3">
                                 <lable for="sku" class="form-lable">Status :</lable>
                                 <select name="status" id="status" class="form-select">
                                     <option value="Active">Active</option>
@@ -86,5 +95,21 @@
         reader.readAsDataURL(event.target.files[0]);
     }
 </script>
+<style>
+    input[type="file"]::file-selector-button {
+        border: 2px solid #6c5ce7;
+        padding: 0.2em 0.4em;
+        border-radius: 0.2em;
+        background-color: #3190a5;
+        transition: 1s;
+        color: #fff;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+        background-color: #81ecd7ff;
+        border: 2px solid #00cec9;
+        color: #fff;
+    }
+</style>
 
 </html>

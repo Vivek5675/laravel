@@ -33,6 +33,8 @@ class ProductController extends Controller {
             'price' => 'required | numeric',
             'status' => 'required',
             'image' => 'image | mimes:jpeg,png,jpg |max:2048',
+            'city' => 'required|array|min:1',
+            'city.*' => 'string'
         ]);
         if ($validator->fails()) {
             // return redirect()->back()->withErrors($validator)->withInput();
@@ -44,6 +46,7 @@ class ProductController extends Controller {
         $product->sku = $request->sku;
         $product->price = $request->price;
         $product->status = $request->status;
+        $product->city = json_encode($request->city);
         $product->save();
 
         if ($request->hasFile('image')) {
@@ -85,6 +88,8 @@ class ProductController extends Controller {
             'price' => 'required | numeric',
             'status' => 'required',
             'image' => 'image | mimes:jpeg,png,jpg |max:2048',
+            'city' => 'required|array|min:1',
+            'city.*' => 'string'
         ]);
         if ($validator->fails()) {
             return redirect(route('products.edit', $product->id))->withErrors($validator)->withInput();
@@ -93,6 +98,7 @@ class ProductController extends Controller {
         $product->name = $request->name;
         $product->sku = $request->sku;
         $product->price = $request->price;
+        $product->city = json_encode($request->city);
         $product->status = $request->status;
         $product->save();
 

@@ -48,6 +48,7 @@
                                     <th>Name</th>
                                     <th>SKU</th>
                                     <th>Price</th>
+                                    <th class="text-center">City</th>
                                     <th width="100">Status</th>
                                     <th width="120" class="text-center">Actions</th>
                                 </tr>
@@ -68,6 +69,17 @@
                                     <td>{{$product->name}}</td>
                                     <td>{{$product->sku}}</td>
                                     <td>{{$product->price}}</td>
+                                    <td>{{$product->city}}</td>
+
+                                    <!-- <td>
+                                        if (is_array($citys) || is_object($citys))   
+                                        <?php
+                                            // $citys =[];
+                                            // if(isset($product->city) && count($product->city) > 0){
+                                            //      $citys =json_decode($product->city);
+                                            // }
+                                        ?>
+                                    </td> -->
                                     <td>
                                         @if($product->status == 'Active')
                                         <span class="badge bg-success">Active</span>
