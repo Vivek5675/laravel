@@ -1,0 +1,20 @@
+<VirtualHost demo.local:80>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "F:/MVC-projects/xampp8.2.12/Demo-test"
+    ServerName demo.local
+    ErrorLog "logs/demo.local"
+    CustomLog "logs/demo.local" common
+
+</VirtualHost>
+
+<VirtualHost demo.local:443>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "F:/MVC-projects/xampp8.2.12/Demo-test"
+    ServerName demo.local
+    ErrorLog "demo.local"
+    CustomLog "demo.local" common
+
+    SSLEngine on
+    SSLCertificateFile "crt/demo.local/server.crt"
+    SSLCertificateKeyFile "crt/demo.local/server.key"
+</VirtualHost>
